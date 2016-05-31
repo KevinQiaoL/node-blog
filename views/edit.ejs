@@ -1,0 +1,34 @@
+<%- include header %>
+<form method="post" class="form-horizontal">
+    <div class="form-group">
+    	<label for="title" class="col-sm-3 control-label">标题</label>
+    	<div class="col-sm-6">
+    		<p class="form-control-static"><%= post.title %></p>
+    	</div>
+    </div>
+    <% var tags = post.tags[0].length %>
+    <% if ( tags != 0) { %>
+    <div class="form-group">
+    	<label for="title" class="col-sm-3 control-label">标签</label>
+    	<div class="col-sm-6">
+    		<p class="form-control-static">
+    		<% for(var tag in post.tags ) { %>
+	    		<span class="label label-info"><%= post.tags[tag] %></span>
+	    	<% } %>
+    		</p>
+    	</div>
+    </div>
+    <% } %>
+    <div class="form-group">
+    	<label for="title" class="col-sm-3 control-label">正文</label>
+    	<div class="col-sm-6">
+    		<textarea name="post" rows="20" cols="100" class="form-control" placeholder="正文内容"><%= post.post %></textarea>
+    	</div>
+    </div>
+    <div class="form-group">
+    	<div class="col-sm-6 col-sm-offset-3">
+    		<input class="btn btn-lg btn-primary" type="submit" value="发表" />
+    	</div>
+    </div>
+</form>
+<%- include footer %>

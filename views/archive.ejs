@@ -1,0 +1,23 @@
+<%- include header %>
+<ul class="archive">
+	<% var lastYear = 0 %>
+    <% posts.forEach(function (post, index) { %>
+    <li>
+    	<div class="time-box">
+    		<time><%= post.time.minute %></time>
+    		<% if (lastYear != post.time.year) { %>
+    		<h3><%= post.time.year %></h3>
+    		<% lastYear = post.time.year } %>
+    	</div>
+    	<div class="cbp_tmlabel">
+    		<h2><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h2>
+    		<% if ( post.post.length > 250 ) { %>
+    		<p><%- post.post.substring(0, 250) %>...</p>
+    		<% } else { %>
+    		<p><%- post.post %></p>
+    		<% } %>
+    	</div>
+    </li>
+    <% }) %>
+</ul>
+<%- include footer %>

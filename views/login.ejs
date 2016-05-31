@@ -1,0 +1,22 @@
+<%- include header %>
+<form class="form-horizontal" method="post">
+	<div class="form-group">
+		<label class="col-sm-3 control-label" for="username">用户名</label>
+		<div class="col-sm-5">
+			<input type="text" class="form-control" id="username" name="username">
+			<p class="help-block">
+				你的账户名称，用于登录和显示。
+			</p>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" for="password">密码</label>
+		<div class="col-sm-5">
+			<input type="password" class="form-control" id="password" name="password">
+		</div>
+	</div>
+	<div class="col-sm-5 col-sm-offset-3">
+		<button type="submit" class="btn btn-primary">登录</button>
+	</div>
+</form>
+<%- include footer %>

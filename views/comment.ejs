@@ -1,0 +1,52 @@
+<br />
+<% post.comments.forEach(function (comment, index) { %>
+<div class="media">
+    <div class="media-left">
+        <img src="<%= comment.head %>" class="l_head" />
+    </div>
+    <div class="media-body">
+        <div class="media-heading">
+            <a href="<%= comment.website %>"><%= comment.name %></a>
+            <span class="text-muted"> 回复于 <%= comment.time %></span></p>
+        </div>
+        <p><%- comment.content %></p>
+    </div>
+    <p>
+</div>
+<% }) %>
+<form method="post" action="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>" class="form-horizontal">
+    <% if (user) { %>
+    <div style="margin-bottom:15px;">
+        <label for="name">姓名</label>
+        <input type="text" class="form-control" name="name" value="<%= user.name %>" />
+    </div>
+    <div style="margin-bottom:15px;">
+        <label for="emali">email</label>
+        <input type="text" class="form-control" name="email" value="<%= user.email %>">
+    </div>
+    <div style="margin-bottom:15px;">
+        <label for="emali">网址</label>
+        <input type="text" class="form-control" name="website" value="/u/<%= user.name %>">
+    </div>
+    <% } else { %>
+    <div style="margin-bottom:15px;">
+        <label for="name">姓名</label>
+        <input type="text" class="form-control" name="name"/>
+    </div>
+    <div style="margin-bottom:15px;">
+        <label for="emali">email</label>
+        <input type="text" class="form-control" name="email"/>
+    </div>
+    <div style="margin-bottom:15px;">
+        <label for="emali">网址</label>
+        <input type="text" class="form-control" name="website" value="http://"/>
+    </div>
+    <% } %>
+
+    <div style="margin-bottom:15px;">
+        <textarea name="content" class="form-control" rows="5" cols="80"></textarea>
+    </div>
+    <div>
+        <input type="submit" class="btn btn-primary" value="发表评论" />
+    </div>
+</form>

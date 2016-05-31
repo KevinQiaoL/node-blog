@@ -1,0 +1,32 @@
+<%- include header %>
+<div class="row">
+    <div class="col-md-7">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="h3"><%= post.title %></div>
+                <p class="text-muted">
+                    作者：<a href="/u/<%= post.name %>"><%= post.name %></a> |
+                    日期：<%= post.time.minute %> |
+                    标签：
+                    <% post.tags.forEach(function (tag, index) { %>
+                    <% if (tag) { %>
+                    <a class="btn btn-link btn-sm" href="/tags/<%= tag %>"><%= tag %></a>
+                    <% } %>
+                    <% }) %>
+                </p>
+                <%- post.post %>
+                <p class="text-muted">阅读：<%= post.pv %> | 评论：<%= post.comments.length %></p>
+            </div>
+        </div>
+        <%- include comment %>
+    </div>
+    <div class="col-md-5">
+        <p>
+            <% if(user && user.name == post.name) { %>
+                <span><a class="btn btn-danger" href="/edit/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">编辑</a></span>
+                <span><a class="btn btn-default" href="/remove/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">删除</a></span>
+            <% } %>
+        </p>
+    </div>
+</div>
+<%- include footer %>

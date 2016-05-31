@@ -1,0 +1,105 @@
+.archive{list-style:none;margin:0;padding:30px 0 0 0;}
+.archive li{position:relative;padding-left:300px;padding-bottom:15px;}
+.archive li div.time-box{
+	position: absolute;
+	left:0;
+	width:200px;
+	text-align:right;
+}
+.archive li:before{
+	position: absolute;
+	width:8px;
+	top:0;
+	bottom:0;
+	left:240px;
+	background-color:#afdcf8;
+	content:"";
+}
+.archive li:after{
+	border-radius:100%;
+	left:212px;
+	top:-10px;
+	width:64px;
+	height:64px;
+	position:absolute;
+	content:"\e023";
+	text-align: center;
+	line-height: 48px;
+	color:#fff;
+	font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    font-size:32px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+	background-color:#46a4da;
+	border:8px solid #afdcf8;
+}
+.archive li div.time-box time{
+	font-size: 0.9em;
+    color: #bdd0db;
+}
+.archive li div.time-box h3{
+	margin:0;
+	color:#6cbfee;
+	font-size:32px;
+}
+.archive li div.cbp_tmlabel {
+	background: #3594cb;
+	color: #fff;
+	padding: 2em;
+	font-size: 1.2em;
+	font-weight: 300;
+	line-height: 1.4;
+	position: relative;
+	border-radius: 5px;
+}
+
+.archive li:nth-child(odd) .cbp_tmlabel {
+	background: #6cbfee;
+}
+
+.archive li div.cbp_tmlabel h2 { 
+	margin-top: 0px;
+	padding: 0 0 10px 0;
+	border-bottom: 1px solid rgba(255,255,255,0.4);
+}
+.archive li div.cbp_tmlabel h2 a{color:#fff;}
+/* The triangle */
+.archive li div.cbp_tmlabel:after {
+	right: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-right-color: #3594cb;
+	border-width: 10px;
+	top: 10px;
+}
+
+.archive li:nth-child(odd) .cbp_tmlabel:after {
+	border-right-color: #6cbfee;
+}
+.blog-footer{
+	padding:50px 0;
+	text-align:center;
+	border-top:1px solid #ececec;
+	margin-top: 50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
