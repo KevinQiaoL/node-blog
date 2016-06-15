@@ -93,9 +93,9 @@ Post.getAllBySize  = function get(name, page, callback){
 				  if (err){
 				      return callback(err);
 				  }
-				  docs.forEach(function (doc) {
+				  /*docs.forEach(function (doc) {
 				      doc.post = markdown.toHTML(doc.post);
-				  });
+				  });*/
 				  return callback(null, docs, total);
 				});
 			});
@@ -138,12 +138,12 @@ Post.getOne = function(name, day, title, callback){
 						}
 					});
 				}
-				if(result){
+				/*if(result){
 					result.post = markdown.toHTML(result.post);
 					result.comments.forEach(function(comment){
 						comment.contents = markdown.toHTML(comment.content);
 					});
-				}
+				}*/
 				callback(null, result);
 			})
 		});

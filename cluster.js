@@ -2,6 +2,8 @@ var cluster = require('cluster');
 var os = require('os');
 var numCPUs = os.cpus().length;//获取CPU数量
 var workers = {};
+var fs = require('fs');
+var https = require('https');
 
 if(cluster.isMaster){
   //主进程分支
@@ -19,6 +21,14 @@ if(cluster.isMaster){
 }else{
   //工作进程分支，启动服务器
   var app = require('./app');
+  /*var options = {
+      key: fs.readFileSync('ssl/private.key'),
+      cert: fs.readFileSync('ssl/certificate.crt'),
+      ca: fs.readFileSync('ssl/ca_bundle.crt') 
+  };
+  https.createServer(options,app).listen(3000,function(){
+    console.log("Blog has started");
+  });*/
   app.listen(3000);
 }
 //当进程被终止时，关闭所有进程

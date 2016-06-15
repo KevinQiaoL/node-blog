@@ -1,13 +1,17 @@
 var express = require('express');
 var router = express.Router();
-var crypto = require('crypto');
+var crypto = require('crypto');//md5加密 中间件
 var User = require('../models/user.js');
 var Post = require('../models/post.js');
 var Comment = require('../models/comment.js');
+var Busboy = require('busboy');//上传 中间件
+
+var xss = require('xss');
+
 var pageSize = 2;
-var ck_email = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-var ck_username = /^[A-Za-z0-9_]{1,20}$/;
-var ck_password =  /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/;
+var blog_email = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+var blog_user = /^[A-Za-z0-9_]{1,20}$/;
+var blog_pass =  /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/;
 
 module.exports = function(app){
 	app.get('/', function(req, res) {
@@ -42,14 +46,23 @@ module.exports = function(app){
 	  	title: '用户注册',
 	  });
 	});
+	app.get('/videos', function(req, res) {
+	  res.render('video', { 
+	  	title: '视频直播',
+	  });
+	});
 	app.post('/reg',checkNotLogin);
 	app.post('/reg',function(req, res){
-		if(req.body['username'] == ""){
-			req.flash('error','用户名不能为空');
+		if( !blog_user.test(req.body['username']) ){
+			req.flash('error','用户名错误，不能包含特殊字符');
 			return res.redirect('/reg');
 		}
-		if(req.body['password'] == ""){
-			req.flash('error','密码不能为空');
+		if( !blog_email.test(req.body['email']) ){
+			req.flash('error','邮箱地址错误，请输入正确邮箱地址');
+			return res.redirect('/reg');
+		}
+		if( !blog_pass.test(req.body['password']) ){
+			req.flash('error','密码格式错误，需为6到20位，数字和字母，也可包含 !@#$%^&*()_');
 			return res.redirect('/reg');
 		}
 		if(req.body['password-repeat'] != req.body['password']){
@@ -148,7 +161,8 @@ module.exports = function(app){
 	app.post('/post', function(req, res){
 		var currentUser = req.session.user;
 		var tags = [req.body.tag1, req.body.tag2, req.body.tag3];
-		post = new Post(currentUser.name, currentUser.head, req.body.title, tags, req.body.post);
+		var post_content = xss(req.body.post);
+		post = new Post(currentUser.name, currentUser.head, req.body.title, tags, post_content);
 		post.save(function(err){
 			if(err){
 				req.flash('err',err);
@@ -202,16 +216,22 @@ module.exports = function(app){
 		var date = new Date(),
 			time = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +
                 date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+       	var setNum = parseInt(Math.random()*4, 10);
+       	if( setNum == 0 ) return setNum+1;
         var md5 = crypto.createHash('md5'),
             email_MD5 = md5.update(req.body.email.toLowerCase()).digest('hex'),
-            head = "http://en.gravatar.com/" + email_MD5 + "?s=48";
+            head = "https://robohash.org/" + email_MD5 +".png?set=set"+ setNum +"&size=48x48";
+        if(req.session.user){
+        	head = req.session.user.head;
+        }
+        var commentCont = xss(req.body.content);
         var comment = {
         	name : req.body.name,
         	head: head,
             email: req.body.email,
             website : req.body.website,
         	time : time,
-        	content : req.body.content
+        	content : commentCont
         };
         var newComment = new Comment(req.params.name, req.params.day, req.params.title, comment);
         newComment.save(function(err){
@@ -311,6 +331,10 @@ module.exports = function(app){
         res.render("404",{
         	title:'出错啦！'
         });
+    });
+    //上传
+    app.post('/ueditor/ue',function(req, res){
+    	console.log(req.query.action);
     });
 };
 function checkLogin(req, res, next){

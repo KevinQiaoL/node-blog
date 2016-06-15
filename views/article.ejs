@@ -14,7 +14,9 @@
                     <% } %>
                     <% }) %>
                 </p>
-                <%- post.post %>
+                <div class="article-body">
+                    <%- post.post %>
+                </div>
                 <p class="text-muted">阅读：<%= post.pv %> | 评论：<%= post.comments.length %></p>
             </div>
         </div>
@@ -30,3 +32,12 @@
     </div>
 </div>
 <%- include footer %>
+
+<script>
+var ue = UE.getEditor('editor',{
+    toolbars: [
+        ['fullscreen', 'source', 'undo', 'redo'],
+        ['bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc']
+    ]
+});
+</script>

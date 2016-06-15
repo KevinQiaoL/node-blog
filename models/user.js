@@ -11,10 +11,11 @@ function User(user){
 module.exports = User;
 
 User.prototype.save = function save(callback){
-	
+	var setNum = parseInt(Math.random()*4, 10);
+	if( setNum == 0 ) return setNum+1;
 	var md5 = crypto.createHash('md5'),
 		email_MD5 = md5.update(this.email.toLowerCase()).digest('hex'),
-		head = "http://en.gravatar.com/avatar/" + email_MD5 + "?s=48";
+		head = "https://robohash.org/" + email_MD5 +".png?set=set"+ setNum +"&size=48x48";
 	var user = {
 		name : this.name,
 		password : this.password,
